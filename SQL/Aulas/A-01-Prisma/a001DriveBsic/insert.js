@@ -8,7 +8,7 @@ const db = new pg.Client({
 async function insertPokemon() {
     await db.connect();
 
-    const pokemon = { name: "Squarton", type: "agua" }
+    const pokemon = { name: "Bulbasauro", type: "planta" }
 
 
     const result1 = await db.query(`INSERT INTO "Pokemon" (name, type) VALUES ($1, $2);`
