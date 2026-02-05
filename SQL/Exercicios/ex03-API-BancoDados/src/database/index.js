@@ -9,6 +9,11 @@ async function query(queryString, params, callBack) {
     return pool.query(queryString, params, callBack);
 }
 
+async function getClient() {
+    return pool.connect();
+}
+
 module.exports = {
     query,
+    getClient
 };

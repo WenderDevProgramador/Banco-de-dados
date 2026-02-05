@@ -1,4 +1,4 @@
-const {query} = require('..database/')
+const { query, getClient } = require('..database/')
 
 class Order {
     constructor(orderRow, populateCustomer, populateProducts) {
