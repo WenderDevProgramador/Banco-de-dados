@@ -1,4 +1,4 @@
-const { query, getClient } = require('../database/');
+const { query, getClient } = require('../database');
 const Customer = require('./Customer');
 const Product = require("./Product");
 
