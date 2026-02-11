@@ -1,29 +1,24 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const { PrismaClient } = require("@prisma/client")
 
-
+const prisma = new PrismaClient()
 
 async function main() {
     await prisma.post.createMany({
         data: [
             {
-                title: 'Olá, mundo!',
-                content: 'Este é meu primeiro post usando Prisma.',
+                title: "Olá, mundo!",
+                content: "Este é o meu primeiro post criado com a ajuda do Prisma ORM!",
                 published: true
             },
-
             {
-                title: 'Prisma é incrível!',
-                content: 'Estou adorando usar Prisma para gerenciar meu banco de dados.',
-                published: true
+                title: "Post 2",
+                content: null
             }
         ]
     })
 }
 
 main().then(async () => {
-    await prisma.$disconnect()
+    const result = await prisma.post.findMany()
+    console.table(result)
 })
-
-
-
