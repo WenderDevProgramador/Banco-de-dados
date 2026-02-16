@@ -3,22 +3,47 @@ const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient()
 
 async function main() {
-    await prisma.post.createMany({
-        data: [
-            {
-                title: "Olá, mundo!",
-                content: "Este é o meu primeiro post criado com a ajuda do Prisma ORM!",
-                published: true
+
+//     await prisma.post.create({
+//         data: {
+//             title: "Meu terceiro post",
+//             content: "conteúdo novo",
+//             slug: "post-7",
+//             author: { connect: { email: "alice@example.com" } } // conecta ao usuário existente
+//         }
+//     })
+// }
+
+
+    await prisma.user.create({
+        data: {
+            name: "Alice",
+            email: "alice@example.com",
+            posts: {
+                create: [
+                    {
+                        title: "My first post",
+                        content: "lorem ipusun",
+                        slug: "post 5"
+
+                    },
+                    {
+                        title: "My second post",
+                        content: "lorem ipsum dolor sit amet",
+                        slug: "post 6"
+
+                    },
+                ],
             },
-            {
-                title: "Post 2",
-                content: null
-            }
-        ]
+
+        }
     })
+
+    const result = await prisma.user.findMany({
+        include: {posts: true}
+    })
+
+    console.log(result, result[0].posts)
 }
 
-main().then(async () => {
-    const result = await prisma.post.findMany()
-    console.table(result)
-})
+main()
