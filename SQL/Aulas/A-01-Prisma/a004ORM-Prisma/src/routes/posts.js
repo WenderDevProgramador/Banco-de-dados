@@ -75,7 +75,13 @@ router.post("/", async (req, res) => {
             slug: req.body.slug,
             content: req.body.content,
             published: req.body.published,
-            authorId: req.body.authorId
+            authorId: req.body.authorId,
+            tags: {
+                connectOrCreate: req.body.tags.map(tagId => ({
+                    where: { id: tagId },
+                    create: { name: `Tag ${tagId}` }
+                }))
+            }
         }
     })
     res.status(201).json(newPost);
@@ -86,7 +92,11 @@ router.get("/:id", async (req, res) => {
         where: {
             id: parseInt(req.params.id)
         },
-        include: {author: true}
+        include: {
+            author: true,
+            tags: true
+
+        }
     })
     res.json(post);
 });
