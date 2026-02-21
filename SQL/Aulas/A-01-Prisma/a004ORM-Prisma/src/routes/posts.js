@@ -77,10 +77,7 @@ router.post("/", async (req, res) => {
             published: req.body.published,
             authorId: req.body.authorId,
             tags: {
-                connectOrCreate: req.body.tags.map(tagId => ({
-                    where: { id: tagId },
-                    create: { name: `Tag ${tagId}` }
-                }))
+                connect: req.body.tags
             }
         }
     })
@@ -108,10 +105,10 @@ router.put("/:id", async (req, res) => {
             id: parseInt(req.params.id)
         },
         data: {
-            title,
-            slug,
-            content,
-            published
+            ...req.body,
+            tags: {
+                set: req.body.tags
+            }
         }
     })
     res.json(updatedPost);

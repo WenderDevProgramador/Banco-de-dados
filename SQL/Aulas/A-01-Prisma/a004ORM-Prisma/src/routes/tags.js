@@ -16,7 +16,19 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-    const tag = await prisma.tag.findUnique({ where: { id: +req.params.id } });
+    const tag = await prisma.tag.findUnique({ 
+        where: { id: +req.params.id },
+        include: { 
+            posts:  {
+                include: {
+                    author: {
+                        select: {id:true, name: true}
+                    }
+                }
+                    }
+        }
+        }
+    );
     res.json(tag);
 });
 
