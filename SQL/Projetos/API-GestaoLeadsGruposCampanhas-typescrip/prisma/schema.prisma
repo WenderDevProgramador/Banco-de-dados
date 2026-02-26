@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
@@ -15,15 +15,15 @@ model Group {
 }
 
 model Lead {
-  id            Int            @id @default(autoincrement())
-  name          String         @db.VarChar(255)
-  email         String         @unique @db.VarChar(255)
-  phone         String         @db.VarChar(20)
-  status        LeadStatus     @default(NEW)
-  groups        Group[]        @relation("GroupLeads")
-  creataedAt    DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  campaigns LeadCampaign[]
+  id         Int            @id @default(autoincrement())
+  name       String         @db.VarChar(255)
+  email      String         @unique @db.VarChar(255)
+  phone      String         @db.VarChar(20)
+  status     LeadStatus     @default(NEW)
+  groups     Group[]        @relation("GroupLeads")
+  creataedAt DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  campaigns  LeadCampaign[]
 }
 
 enum LeadStatus {
@@ -37,24 +37,23 @@ enum LeadStatus {
 }
 
 model Campaign {
-  id            Int            @id @default(autoincrement())
-  name          String         @db.VarChar(255)
-  description   String
-  startDate     DateTime
-  endDate       DateTime?
-  leads LeadCampaign[]
+  id          Int            @id @default(autoincrement())
+  name        String         @db.VarChar(255)
+  description String
+  startDate   DateTime
+  endDate     DateTime?
+  leads       LeadCampaign[]
 }
 
 model LeadCampaign {
   leadId     Int
   campaignId Int
   status     LeadCampaignStatus @default(NEW)
-  campaign   Campaign @relation(fields: [campaignId], references: [id])
-  lead       Lead     @relation(fields: [leadId], references: [id])
+  campaign   Campaign           @relation(fields: [campaignId], references: [id])
+  lead       Lead               @relation(fields: [leadId], references: [id])
 
   @@id([leadId, campaignId])
 }
-
 
 enum LeadCampaignStatus {
   NEW
