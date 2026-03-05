@@ -10,6 +10,6 @@ export const CreateLeadRequestSchema = z.object({
         "Converted",
         "Unresponsive",
         "Disqualified",
-        "Archived"]),
+        "Archived"]).optional(),
     message: z.string().optional(),
 }).optional()

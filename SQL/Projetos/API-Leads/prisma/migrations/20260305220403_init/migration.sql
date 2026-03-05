@@ -19,7 +19,7 @@ CREATE TABLE "Lead" (
     "name" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
     "phone" VARCHAR(255) NOT NULL,
-    "status" "LeadStatus" NOT NULL DEFAULT 'New',
+    "status" "LeadStatus" DEFAULT 'New',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
