@@ -95,6 +95,20 @@ export class LeadsController {
                 throw new HttpError(404, "Lead not found")
             }
 
+            if (leadExists.status === "New" && body.status !== undefined && body.status !== "Contacted") {
+                throw new HttpError(400, "Um novo lead deve ser contactado antes de mudar para outro status")
+            }
+
+            if (body.status && body.status === "Archived") {
+                const now = new Date()
+                const diffTime = Math.abs(now.getTime() - leadExists.updatedAt.getTime())
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+                if (diffDays < 180) {
+                    throw new HttpError(400, "Um lead arquivado deve ter pelo menos 180 dias de inatividade")
+                }
+            }
+
             const updatedLead = await prisma.lead.update({
                 where: { id: Number(req.params.id) },
                 data: body
