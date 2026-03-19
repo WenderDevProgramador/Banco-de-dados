@@ -5,6 +5,7 @@ import { HttpError } from "../errors/HttpError.js";
 import type { Prisma } from "../generated/prisma/client.js";
 import { meta } from "zod/v4/core";
 
+
 export class LeadsController {
     index: Handler = async (req, res, next) => {
         try {
